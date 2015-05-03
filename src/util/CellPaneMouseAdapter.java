@@ -17,6 +17,11 @@ public class CellPaneMouseAdapter extends MouseAdapter {
 		this.cellPane = cellPane;
 		this.colorMouseEntered = DEFAULT_COLOR_MOUSE_ENTERED;
 	}
+	
+	@Override
+	public void mouseClicked(MouseEvent event) {
+		this.cellPane.notifyOnSelect();
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent event) {

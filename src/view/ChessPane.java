@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-public class ChessPane extends JPanel {
+import view.CellPane.CellPaneListener;
+
+public class ChessPane extends JPanel implements CellPaneListener {
 
 	private static final long serialVersionUID = 4286502528939775085L;
 
@@ -20,6 +22,7 @@ public class ChessPane extends JPanel {
 	private Color colorOne;
 	private Color colorTwo;
 	
+	private CellPane cellPaneSelected;
 	private ArrayList<CellPane> cellPaneList;
 	
 	public ChessPane() {
@@ -30,10 +33,13 @@ public class ChessPane extends JPanel {
 		this.colorOne = colorOne;
 		this.colorTwo = colorTwo;
 		
+		this.cellPaneSelected = null;
 		this.cellPaneList = new ArrayList<CellPane>();
 		
 		setLayout(new GridBagLayout());
 		createGridPane();
+		
+		getCellPane(1, 1).setIcon("icon/Brown K_48x48.png");
 	}
 	
 	public CellPane getCellPane(int row, int col) {
@@ -51,6 +57,7 @@ public class ChessPane extends JPanel {
 				Color cellPaneColor = getGridColor(row, col);
 
 				cellPane.setDefaultBackground(cellPaneColor);
+				cellPane.setCellPaneListener(this);
 				add(cellPane, gridBag);
 				this.cellPaneList.add(cellPane);
 			}
@@ -62,6 +69,29 @@ public class ChessPane extends JPanel {
 			return this.colorOne;
 		} else {
 			return this.colorTwo;
+		}
+	}
+	
+	private void resetColor(CellPane cellPane) {
+		int index = this.cellPaneList.indexOf(cellPane);
+		int row = index / COL_NUMBER;
+		int col = index % COL_NUMBER;
+		
+		cellPane.setDefaultBackground(getGridColor(row, col));
+	}
+
+	@Override
+	public void onSelect(CellPane cellPane) {
+		if(this.cellPaneSelected == null) {
+			if(cellPane.haveIcon()) {
+				this.cellPaneSelected = cellPane;
+				this.cellPaneSelected.setDefaultBackground(Color.GREEN);
+			}
+		} else {
+			cellPane.setIcon(this.cellPaneSelected.getIconPath());
+			resetColor(this.cellPaneSelected);
+			this.cellPaneSelected.removeIcon();
+			this.cellPaneSelected = null;
 		}
 	}
 }
