@@ -4,16 +4,16 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import view.CellPane;
+import model.CellPanel;
 
 public class CellPaneMouseAdapter extends MouseAdapter {
 	
 	public static final Color DEFAULT_COLOR_MOUSE_ENTERED = Color.BLUE;
 
-	private CellPane cellPane;
+	private CellPanel cellPane;
 	private Color colorMouseEntered;
 
-	public CellPaneMouseAdapter(CellPane cellPane) {
+	public CellPaneMouseAdapter(CellPanel cellPane) {
 		this.cellPane = cellPane;
 		this.colorMouseEntered = DEFAULT_COLOR_MOUSE_ENTERED;
 	}

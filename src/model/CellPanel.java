@@ -1,4 +1,4 @@
-package view;
+package model;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,10 +9,10 @@ import javax.swing.JPanel;
 import util.CellPaneMouseAdapter;
 import util.ImageIconHandler;
 
-public class CellPane extends JPanel {
+public class CellPanel extends JPanel {
 	
-	public interface CellPaneListener {
-		public void onSelect(CellPane cellPane);
+	public interface CellPanelListener {
+		public void onSelect(CellPanel cellPanel);
 	}
 
 	private static final long serialVersionUID = -710890541389220734L;
@@ -23,9 +23,9 @@ public class CellPane extends JPanel {
 	private JLabel labelIcon;
 	private Color defaultBackground;
 	
-	private CellPaneListener listener;
+	private CellPanelListener listener;
 
-	public CellPane() {
+	public CellPanel() {
 		addMouseListener(new CellPaneMouseAdapter(this));
 
 		this.iconPath = "";
@@ -64,7 +64,7 @@ public class CellPane extends JPanel {
 		setBackground(this.defaultBackground);
 	}
 	
-	public void setCellPaneListener(CellPaneListener listener) {
+	public void setCellPaneListener(CellPanelListener listener) {
 		this.listener = listener;
 	}
 
