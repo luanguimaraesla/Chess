@@ -2,8 +2,9 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Label;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import util.CellPaneMouseAdapter;
@@ -12,23 +13,20 @@ public class CellPane extends JPanel {
 
 	private static final long serialVersionUID = -710890541389220734L;
 
-	public static final int SIDE = 50;
+	public static final int SIDE = 64;
 
-	private Label labelText;
+	private JLabel labelIcon;
 	private Color defaultBackground;
 
 	public CellPane() {
-		this.labelText = new Label();
 		addMouseListener(new CellPaneMouseAdapter(this));
+		
+		this.labelIcon = new JLabel();
+		add(this.labelIcon);
 	}
 
-	public void setText(String text) {
-		if (!text.isEmpty()) {
-			this.labelText.setText(text);
-			add(this.labelText);
-		} else {
-			remove(this.labelText);
-		}
+	public void setIcon(String iconPath) {
+		this.labelIcon.setIcon(new ImageIcon(iconPath));
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public class ChessPane extends JPanel {
 	public static final int COL_NUMBER = 8;
 	
 	public static final Color COLOR_ONE = Color.WHITE;
-	public static final Color COLOR_TWO = Color.BLACK;
+	public static final Color COLOR_TWO = Color.GRAY;
 
 	public ChessPane() {
         setLayout(new GridBagLayout());
@@ -47,6 +47,7 @@ public class ChessPane extends JPanel {
                     }
                 }
                 
+                cellPane.setIcon("icon/White K_48x48.png");
                 cellPane.setDefaultBackground(cellPaneColor);
                 cellPane.setBorder(border);
                 add(cellPane, gridBag);
