@@ -14,6 +14,9 @@ public class ChessPane extends JPanel {
 
 	public static final int ROW_NUMBER = 8;
 	public static final int COL_NUMBER = 8;
+	
+	public static final Color COLOR_ONE = Color.WHITE;
+	public static final Color COLOR_TWO = Color.BLACK;
 
 	public ChessPane() {
         setLayout(new GridBagLayout());
@@ -26,21 +29,25 @@ public class ChessPane extends JPanel {
 
                 CellPane cellPane = new CellPane();
                 Border border = null;
+                
+                Color borderColor = Color.GRAY;
+                Color cellPaneColor = (row + col) % 2 == 0 ? COLOR_ONE : COLOR_TWO;
+                
                 if (row < (ROW_NUMBER - 1)) {
                     if (col < (COL_NUMBER - 1)) {
-                        border = new MatteBorder(1, 1, 0, 0, Color.GRAY);
+                        border = new MatteBorder(1, 1, 0, 0, borderColor);
                     } else {
-                        border = new MatteBorder(1, 1, 0, 1, Color.GRAY);
+                        border = new MatteBorder(1, 1, 0, 1, borderColor);
                     }
                 } else {
                     if (col < (COL_NUMBER - 1)) {
-                        border = new MatteBorder(1, 1, 1, 0, Color.GRAY);
+                        border = new MatteBorder(1, 1, 1, 0, borderColor);
                     } else {
-                        border = new MatteBorder(1, 1, 1, 1, Color.GRAY);
+                        border = new MatteBorder(1, 1, 1, 1, borderColor);
                     }
                 }
-                cellPane.setText("Torre");
-                cellPane.setText("");
+                
+                cellPane.setDefaultBackground(cellPaneColor);
                 cellPane.setBorder(border);
                 add(cellPane, gridBag);
             }

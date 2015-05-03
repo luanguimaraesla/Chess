@@ -42,5 +42,6 @@ public class CellPane extends JPanel {
 
 	public void setDefaultBackground(Color defaultBackground) {
 		this.defaultBackground = defaultBackground;
+		setBackground(this.defaultBackground);
 	}
 }
