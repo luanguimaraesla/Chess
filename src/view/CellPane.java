@@ -3,11 +3,11 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import util.CellPaneMouseAdapter;
+import util.ImageIconHandler;
 
 public class CellPane extends JPanel {
 
@@ -20,13 +20,13 @@ public class CellPane extends JPanel {
 
 	public CellPane() {
 		addMouseListener(new CellPaneMouseAdapter(this));
-		
+
 		this.labelIcon = new JLabel();
 		add(this.labelIcon);
 	}
 
 	public void setIcon(String iconPath) {
-		this.labelIcon.setIcon(new ImageIcon(iconPath));
+		this.labelIcon.setIcon(ImageIconHandler.load(iconPath));
 	}
 
 	@Override
