@@ -7,12 +7,15 @@ public class Square {
 
 	public interface SquareEventListener {
 		public void onOutEvent(Square square);
+
 		public void onHoverEvent(Square square);
+
 		public void onSelectEvent(Square square);
 	}
-	
+
 	public interface SquareChangeListener {
 		public void onColorChange(Square square);
+
 		public void onChangeImagePath(Square square);
 	}
 
@@ -26,18 +29,18 @@ public class Square {
 	private Integer size;
 	private Point position;
 	private String imagePath;
-	
+
 	private SquareEventListener squareEventListener;
 	private SquareChangeListener squareChangeListener;
-	
+
 	public Square() {
 		this(0, 0);
 	}
-	
+
 	public Square(int x, int y) {
 		this(new Point(x, y));
 	}
-	
+
 	public Square(Point position) {
 		this(position, DEFAULT_COLOR);
 	}
@@ -75,7 +78,7 @@ public class Square {
 		this.color = color;
 		this.position = position;
 		this.imagePath = imagePath;
-		
+
 		this.squareEventListener = EMPTY_EVENT_LISTENER;
 	}
 
@@ -83,33 +86,33 @@ public class Square {
 		this.imagePath = EMPTY_PATH;
 		notifyOnChangeImagePath();
 	}
-	
+
 	public void notifyOnOutEvent() {
-		if(haveSquereEventListener()) {
+		if (haveSquereEventListener()) {
 			this.squareEventListener.onOutEvent(this);
 		}
 	}
-	
+
 	public void notifyOnHoverEvent() {
-		if(haveSquereEventListener()) {
+		if (haveSquereEventListener()) {
 			this.squareEventListener.onHoverEvent(this);
 		}
 	}
-	
+
 	public void notifyOnSelectEvent() {
-		if(haveSquereEventListener()) {
+		if (haveSquereEventListener()) {
 			this.squareEventListener.onSelectEvent(this);
 		}
 	}
-	
+
 	public void notifyOnColorChange() {
-		if(haveSquareChangeListener()) {
+		if (haveSquareChangeListener()) {
 			this.squareChangeListener.onColorChange(this);
 		}
 	}
-	
+
 	public void notifyOnChangeImagePath() {
-		if(haveSquareChangeListener()) {
+		if (haveSquareChangeListener()) {
 			this.squareChangeListener.onChangeImagePath(this);
 		}
 	}
@@ -117,15 +120,15 @@ public class Square {
 	public Point getPosition() {
 		return this.position;
 	}
-	
+
 	public Integer getSize() {
 		return this.size;
 	}
-	
+
 	public boolean haveImagePath() {
 		return this.imagePath != EMPTY_PATH;
 	}
-	
+
 	public String getImagePath() {
 		return this.imagePath;
 	}
@@ -147,15 +150,16 @@ public class Square {
 	public void setSquareEventListener(SquareEventListener squareEventListener) {
 		this.squareEventListener = squareEventListener;
 	}
-	
-	public void setSquareChangeListener(SquareChangeListener squareChangeListener) {
+
+	public void setSquareChangeListener(
+			SquareChangeListener squareChangeListener) {
 		this.squareChangeListener = squareChangeListener;
 	}
 
 	private boolean haveSquereEventListener() {
 		return this.squareEventListener != EMPTY_EVENT_LISTENER;
 	}
-	
+
 	private boolean haveSquareChangeListener() {
 		return this.squareChangeListener != EMPTY_CHANGE_LISTENER;
 	}

@@ -27,19 +27,21 @@ public class SquareControl implements SquareEventListener {
 	private ArrayList<Square> squareList;
 
 	public SquareControl() {
-		this(DEFAULT_COLOR_ONE, DEFAULT_COLOR_TWO, DEFAULT_COLOR_HOVER, DEFAULT_COLOR_SELECTED);
+		this(DEFAULT_COLOR_ONE, DEFAULT_COLOR_TWO, DEFAULT_COLOR_HOVER,
+				DEFAULT_COLOR_SELECTED);
 	}
 
-	public SquareControl(Color colorOne, Color colorTwo, Color colorHover, Color colorSelected) {
+	public SquareControl(Color colorOne, Color colorTwo, Color colorHover,
+			Color colorSelected) {
 		this.colorOne = colorOne;
 		this.colorTwo = colorTwo;
 		this.colorHover = colorHover;
 		this.colorSelected = colorSelected;
-		
+
 		this.squareList = new ArrayList<>();
 		createSquares();
 	}
-	
+
 	public void resetColor(Square square) {
 		int index = this.squareList.indexOf(square);
 		int row = index / COL_NUMBER;
@@ -47,7 +49,7 @@ public class SquareControl implements SquareEventListener {
 
 		square.setColor(getGridColor(row, col));
 	}
-	
+
 	@Override
 	public void onHoverEvent(Square square) {
 		square.setColor(this.colorHover);
@@ -61,24 +63,24 @@ public class SquareControl implements SquareEventListener {
 			selectSquare(square);
 		}
 	}
-	
+
 	@Override
 	public void onOutEvent(Square square) {
-		if(this.selectedSquare != square) {
+		if (this.selectedSquare != square) {
 			resetColor(square);
 		} else {
 			square.setColor(this.colorSelected);
 		}
 	}
-	
+
 	public Square getSquare(int row, int col) {
 		return this.squareList.get((row * COL_NUMBER) + col);
 	}
-	
+
 	public ArrayList<Square> getSquareList() {
 		return this.squareList;
 	}
-	
+
 	public Color getGridColor(int row, int col) {
 		if ((row + col) % 2 == 0) {
 			return this.colorOne;
@@ -86,7 +88,7 @@ public class SquareControl implements SquareEventListener {
 			return this.colorTwo;
 		}
 	}
-	
+
 	private void addSquare() {
 		Square square = new Square();
 		this.squareList.add(square);
@@ -94,19 +96,19 @@ public class SquareControl implements SquareEventListener {
 		resetPosition(square);
 		square.setSquareEventListener(this);
 	}
-	
+
 	private void resetPosition(Square square) {
 		int index = this.squareList.indexOf(square);
 		int row = index / COL_NUMBER;
 		int col = index % COL_NUMBER;
-		
+
 		square.getPosition().setLocation(row, col);
 	}
 
 	private boolean haveSelectedCellPanel() {
 		return this.selectedSquare != EMPTY_SQUARE;
 	}
-	
+
 	private void moveContentOfSelectedSquare(Square square) {
 		square.setImagePath(this.selectedSquare.getImagePath());
 		resetColor(this.selectedSquare);
@@ -120,9 +122,9 @@ public class SquareControl implements SquareEventListener {
 			this.selectedSquare.setColor(this.colorSelected);
 		}
 	}
-	
+
 	private void createSquares() {
-		for(int i = 0; i < (ROW_NUMBER * COL_NUMBER); i++) {
+		for (int i = 0; i < (ROW_NUMBER * COL_NUMBER); i++) {
 			addSquare();
 		}
 	}

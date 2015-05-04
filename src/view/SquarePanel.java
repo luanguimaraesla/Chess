@@ -12,32 +12,26 @@ import util.SquarePanelMouseAdapter;
 public class SquarePanel extends JPanel implements SquareChangeListener {
 
 	private static final long serialVersionUID = -4103462554324663298L;
-	 
+
 	public static final Icon EMPTY_ICON = null;
 	public static final Square EMPTY_SQUARE = null;
 
 	private Square square;
 	private JLabel labelIcon;
-	
+
 	public SquarePanel() {
 		this.square = EMPTY_SQUARE;
 		this.labelIcon = new JLabel();
-		
-		add(this.labelIcon);
 
-		addMouseListener(new SquarePanelMouseAdapter(this));
+		add(this.labelIcon);
 	}
-	
+
 	public void setSquare(Square square) {
 		this.square = square;
 		this.square.setSquareChangeListener(this);
 		this.labelIcon.setIcon(ImageHandler.load(square.getImagePath()));
-	}
-	
-	public void removeSquare() {
-		this.square = EMPTY_SQUARE;
-		this.square.setSquareChangeListener(Square.EMPTY_CHANGE_LISTENER);
-		this.labelIcon.setIcon(EMPTY_ICON);
+
+		addMouseListener(new SquarePanelMouseAdapter(this.square));
 	}
 
 	@Override
@@ -49,7 +43,7 @@ public class SquarePanel extends JPanel implements SquareChangeListener {
 	public void onColorChange(Square square) {
 		this.setBackground(square.getColor());
 	}
-	
+
 	public Square getSquare() {
 		return this.square;
 	}

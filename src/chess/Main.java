@@ -9,9 +9,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import view.GameFrame;
 
 public class Main {
-	
-	private static final String SCREEN_TYPE = "Nimbus";
 
+	private static final String SCREEN_TYPE = "Nimbus";
+	
 	public static void main(String[] args) {
 		initializeScreen();
 	}
@@ -20,7 +20,7 @@ public class Main {
 		defineScreenType();
 		startScreenThread();
 	}
-	
+
 	private static void defineScreenType() {
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -34,7 +34,7 @@ public class Main {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	private static void startScreenThread() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

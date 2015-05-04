@@ -21,12 +21,12 @@ public class SquareBoardPanel extends JPanel {
 	public SquareBoardPanel() {
 		setLayout(new GridBagLayout());
 		this.squarePanelList = new ArrayList<SquarePanel>();
-		
+
 		initializeSquareControl();
 		initializeGrid();
 		initializePiecesInChess();
 	}
-	
+
 	private void initializeSquareControl() {
 		Color colorOne = Color.WHITE;
 		Color colorTwo = Color.GRAY;
@@ -39,9 +39,9 @@ public class SquareBoardPanel extends JPanel {
 
 	private void initializeGrid() {
 		GridBagConstraints gridBag = new GridBagConstraints();
-		
+
 		Square square;
-		for(int i = 0; i < this.squareControl.getSquareList().size(); i++) {
+		for (int i = 0; i < this.squareControl.getSquareList().size(); i++) {
 			square = this.squareControl.getSquareList().get(i);
 			gridBag.gridx = square.getPosition().y;
 			gridBag.gridy = square.getPosition().x;
@@ -52,7 +52,7 @@ public class SquareBoardPanel extends JPanel {
 			squarePanel.setBackground(square.getColor());
 			squarePanel.setPreferredSize(new Dimension(square.getSize(), square
 					.getSize()));
-			
+
 			add(squarePanel, gridBag);
 			this.squarePanelList.add(squarePanel);
 		}

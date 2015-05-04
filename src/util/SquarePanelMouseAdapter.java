@@ -3,28 +3,28 @@ package util;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import view.SquarePanel;
+import model.Square;
 
 public class SquarePanelMouseAdapter extends MouseAdapter {
 
-	private SquarePanel squarePanel;
+	private Square square;
 	
-	public SquarePanelMouseAdapter(SquarePanel squarePanel) {
-		this.squarePanel = squarePanel;
+	public SquarePanelMouseAdapter(Square square) {
+		this.square = square;
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent event) {
-		this.squarePanel.getSquare().notifyOnSelectEvent();
+		this.square.notifyOnSelectEvent();
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent event) {
-		this.squarePanel.getSquare().notifyOnHoverEvent();
+		this.square.notifyOnHoverEvent();
 	}
 
 	@Override
 	public void mouseExited(MouseEvent event) {
-		this.squarePanel.getSquare().notifyOnOutEvent();
+		this.square.notifyOnOutEvent();
 	}
 }
