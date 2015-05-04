@@ -7,13 +7,13 @@ import javax.swing.JFrame;
 
 import control.CellControlPanel;
 
-public class ChessView extends JFrame {
+public class ChessFrame extends JFrame {
 
 	private static final long serialVersionUID = -7774359147747995296L;
 
 	private CellControlPanel cellControlPanel;
 
-	public ChessView() {
+	public ChessFrame() {
 		super("Chess");
 
 		initializeCellControlPanel();

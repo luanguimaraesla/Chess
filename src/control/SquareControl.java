@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import model.Square;
-import model.Square.SquereListener;
+import model.Square.SquareEventListener;
 
-public class SquareControl implements SquereListener {
+public class SquareControl implements SquareEventListener {
 
 	public static final int ROW_NUMBER = 8;
 	public static final int COL_NUMBER = 8;
@@ -36,13 +36,10 @@ public class SquareControl implements SquereListener {
 		this.colorHover = colorHover;
 		this.colorSelected = colorSelected;
 		
+		this.squareList = new ArrayList<>();
 		createSquares();
 	}
 	
-	public Square getSquare(int row, int col) {
-		return this.squareList.get((row * COL_NUMBER) + col);
-	}
-
 	public void resetColor(Square square) {
 		int index = this.squareList.indexOf(square);
 		int row = index / COL_NUMBER;
@@ -65,26 +62,15 @@ public class SquareControl implements SquereListener {
 		}
 	}
 	
-	private void addSquare() {
-		Square square = new Square();
-		resetColor(square);
-		resetPosition(square);
-		square.setSquereListener(this);
-		this.squareList.add(square);
+	public Square getSquare(int row, int col) {
+		return this.squareList.get((row * COL_NUMBER) + col);
 	}
 	
-	private void resetPosition(Square square) {
-		int index = this.squareList.indexOf(square);
-		if(index == -1) {
-			index = this.squareList.size();
-		}
-		int row = index / COL_NUMBER;
-		int col = index % COL_NUMBER;
-		
-		square.getPosition().setLocation(row, col);
+	public ArrayList<Square> getSquareList() {
+		return this.squareList;
 	}
-
-	private Color getGridColor(int row, int col) {
+	
+	public Color getGridColor(int row, int col) {
 		if ((row + col) % 2 == 0) {
 			return this.colorOne;
 		} else {
@@ -92,6 +78,22 @@ public class SquareControl implements SquereListener {
 		}
 	}
 	
+	private void addSquare() {
+		Square square = new Square();
+		this.squareList.add(square);
+		resetColor(square);
+		resetPosition(square);
+		square.setSquareEventListener(this);
+	}
+	
+	private void resetPosition(Square square) {
+		int index = this.squareList.indexOf(square);
+		int row = index / COL_NUMBER;
+		int col = index % COL_NUMBER;
+		
+		square.getPosition().setLocation(row, col);
+	}
+
 	private boolean haveSelectedCellPanel() {
 		return this.selectedSquare != EMPTY_SQUARE;
 	}

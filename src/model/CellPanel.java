@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import util.CellPanelMouseAdapter;
-import util.ImageIconHandler;
+import util.ImageHandler;
 
 public class CellPanel extends JPanel {
 	
@@ -35,7 +35,7 @@ public class CellPanel extends JPanel {
 
 	public void setIcon(String iconPath) {
 		this.iconPath = iconPath;
-		this.labelIcon.setIcon(ImageIconHandler.load(iconPath));
+		this.labelIcon.setIcon(ImageHandler.load(iconPath));
 	}
 	
 	public void removeIcon() {

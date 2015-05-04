@@ -5,7 +5,7 @@ import java.util.TreeMap;
 
 import javax.swing.ImageIcon;
 
-public class ImageIconHandler {
+public class ImageHandler {
 
 	private static Map<String, ImageIcon> iconMap = new TreeMap<String, ImageIcon>();
 

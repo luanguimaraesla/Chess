@@ -6,7 +6,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import view.ChessView;
+import view.GameFrame;
 
 public class Main {
 	
@@ -38,7 +38,7 @@ public class Main {
 	private static void startScreenThread() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new ChessView().setVisible(true);
+				new GameFrame().setVisible(true);
 			}
 		});
 	}

@@ -5,22 +5,28 @@ import java.awt.Point;
 
 public class Square {
 
-	public interface SquereListener {
+	public interface SquareEventListener {
 		public void onHoverEvent(Square square);
 		public void onSelectEvent(Square square);
+	}
+	
+	public interface SquareChangeListener {
+		public void onChangeImagePath(Square square);
 	}
 
 	public static final int DEFAULT_SIZE = 64;
 	public static final String EMPTY_PATH = "";
 	public static final Color DEFAULT_COLOR = Color.WHITE;
-	public static final SquereListener EMPTY_LISTENER = null;
+	public static final SquareEventListener EMPTY_EVENT_LISTENER = null;
+	public static final SquareChangeListener EMPTY_CHANGE_LISTENER = null;
 
 	private Color color;
 	private Integer size;
 	private Point position;
 	private String imagePath;
 	
-	private SquereListener squereListener;
+	private SquareEventListener squareEventListener;
+	private SquareChangeListener squareChangeListener;
 	
 	public Square() {
 		this(0, 0);
@@ -68,7 +74,7 @@ public class Square {
 		this.position = position;
 		this.imagePath = imagePath;
 		
-		this.squereListener = EMPTY_LISTENER;
+		this.squareEventListener = EMPTY_EVENT_LISTENER;
 	}
 
 	public void removeImage() {
@@ -76,14 +82,20 @@ public class Square {
 	}
 	
 	public void notifyOnHoverEvent() {
-		if(haveSquereListener()) {
-			this.squereListener.onHoverEvent(this);
+		if(haveSquereEventListener()) {
+			this.squareEventListener.onHoverEvent(this);
 		}
 	}
 	
 	public void notifyOnSelectEvent() {
-		if(haveSquereListener()) {
-			this.squereListener.onSelectEvent(this);
+		if(haveSquereEventListener()) {
+			this.squareEventListener.onSelectEvent(this);
+		}
+	}
+	
+	public void notifyOnChangeImagePath() {
+		if(haveSquareChangeListener()) {
+			this.squareChangeListener.onChangeImagePath(this);
 		}
 	}
 
@@ -105,6 +117,7 @@ public class Square {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+		notifyOnChangeImagePath();
 	}
 
 	public Color getColor() {
@@ -115,11 +128,19 @@ public class Square {
 		this.color = color;
 	}
 
-	public void setSquereListener(SquereListener squereListener) {
-		this.squereListener = squereListener;
+	public void setSquareEventListener(SquareEventListener squareEventListener) {
+		this.squareEventListener = squareEventListener;
+	}
+	
+	public void setSquareChangeListener(SquareChangeListener squareChangeListener) {
+		this.squareChangeListener = squareChangeListener;
 	}
 
-	private boolean haveSquereListener() {
-		return this.squereListener != EMPTY_LISTENER;
+	private boolean haveSquereEventListener() {
+		return this.squareEventListener != EMPTY_EVENT_LISTENER;
+	}
+	
+	private boolean haveSquareChangeListener() {
+		return this.squareChangeListener != EMPTY_CHANGE_LISTENER;
 	}
 }
