@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import model.Square;
-import control.CellControlPanel;
 import control.SquareControl;
 
 public class SquareBoardPanel extends JPanel {
@@ -62,7 +61,7 @@ public class SquareBoardPanel extends JPanel {
 
 	private void initializePiecesInChess() {
 		String pawnPath = "icon/Brown P_48x48.png";
-		for (int i = 0; i < CellControlPanel.COL_NUMBER; i++) {
+		for (int i = 0; i < SquareControl.COL_NUMBER; i++) {
 			this.squareControl.getSquare(0, i).setImagePath(pawnPath);
 		}
 	}
