@@ -6,14 +6,14 @@ import java.awt.event.MouseEvent;
 
 import model.CellPanel;
 
-public class CellPaneMouseAdapter extends MouseAdapter {
+public class CellPanelMouseAdapter extends MouseAdapter {
 	
 	public static final Color DEFAULT_COLOR_MOUSE_ENTERED = Color.BLUE;
 
 	private CellPanel cellPane;
 	private Color colorMouseEntered;
 
-	public CellPaneMouseAdapter(CellPanel cellPane) {
+	public CellPanelMouseAdapter(CellPanel cellPane) {
 		this.cellPane = cellPane;
 		this.colorMouseEntered = DEFAULT_COLOR_MOUSE_ENTERED;
 	}

@@ -21,13 +21,15 @@ public class CellControlPanel extends JPanel implements CellPanelListener {
 	public static final Color DEFAULT_COLOR_TWO = Color.GRAY;
 	public static final Color DEFAULT_COLOR_SELECTED = Color.GREEN;
 	
+	public static final CellPanel EMPTY_CELL_PANEL = null;
+
 	private Color colorOne;
 	private Color colorTwo;
 	private Color colorSelected;
-	
+
 	private CellPanel cellPanelSelected;
 	private ArrayList<CellPanel> cellPanelList;
-	
+
 	public CellControlPanel() {
 		this(DEFAULT_COLOR_ONE, DEFAULT_COLOR_TWO, DEFAULT_COLOR_SELECTED);
 	}
@@ -36,20 +38,20 @@ public class CellControlPanel extends JPanel implements CellPanelListener {
 		this.colorOne = colorOne;
 		this.colorTwo = colorTwo;
 		this.colorSelected = colorSelected;
-		
-		this.cellPanelSelected = null;
+
+		this.cellPanelSelected = EMPTY_CELL_PANEL;
 		this.cellPanelList = new ArrayList<CellPanel>();
-		
+
 		setLayout(new GridBagLayout());
 		createGridPane();
-		
+
 		getCellPane(1, 1).setIcon("icon/Brown K_48x48.png");
 	}
-	
+
 	public CellPanel getCellPane(int row, int col) {
 		return this.cellPanelList.get((row * COL_NUMBER) + col);
 	}
-	
+
 	private void createGridPane() {
 		GridBagConstraints gridBag = new GridBagConstraints();
 		for (int row = 0; row < ROW_NUMBER; row++) {
@@ -67,7 +69,7 @@ public class CellControlPanel extends JPanel implements CellPanelListener {
 			}
 		}
 	}
-	
+
 	private Color getGridColor(int row, int col) {
 		if ((row + col) % 2 == 0) {
 			return this.colorOne;
@@ -75,35 +77,39 @@ public class CellControlPanel extends JPanel implements CellPanelListener {
 			return this.colorTwo;
 		}
 	}
-	
+
 	private void resetColor(CellPanel cellPanel) {
 		int index = this.cellPanelList.indexOf(cellPanel);
 		int row = index / COL_NUMBER;
 		int col = index % COL_NUMBER;
-		
+
 		cellPanel.setDefaultBackground(getGridColor(row, col));
 	}
 
 	@Override
 	public void onSelect(CellPanel cellPanel) {
-		if(this.cellPanelSelected == null) {
-			markSelectedCellPanel(cellPanel);
+		if (haveSelectedCellPanel()) {
+			moveContentOfSelectedCellPanel(cellPanel);
 		} else {
-			moveSelectedCellPanel(cellPanel);
+			selectCellPanel(cellPanel);
 		}
 	}
-	
-	private void markSelectedCellPanel(CellPanel cellPanel) {
-		if(cellPanel.haveIcon()) {
-			this.cellPanelSelected = cellPanel;
-			this.cellPanelSelected.setDefaultBackground(this.colorSelected);
-		}
+
+	private boolean haveSelectedCellPanel() {
+		return this.cellPanelSelected != EMPTY_CELL_PANEL;
 	}
 	
-	private void moveSelectedCellPanel(CellPanel cellPanel) {
+	private void moveContentOfSelectedCellPanel(CellPanel cellPanel) {
 		cellPanel.setIcon(this.cellPanelSelected.getIconPath());
 		resetColor(this.cellPanelSelected);
 		this.cellPanelSelected.removeIcon();
-		this.cellPanelSelected = null;
+		this.cellPanelSelected = EMPTY_CELL_PANEL;
+	}
+
+	private void selectCellPanel(CellPanel cellPanel) {
+		if (cellPanel.haveIcon()) {
+			this.cellPanelSelected = cellPanel;
+			this.cellPanelSelected.setDefaultBackground(this.colorSelected);
+		}
 	}
 }

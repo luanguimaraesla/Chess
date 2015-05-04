@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import util.CellPaneMouseAdapter;
+import util.CellPanelMouseAdapter;
 import util.ImageIconHandler;
 
 public class CellPanel extends JPanel {
@@ -26,7 +26,7 @@ public class CellPanel extends JPanel {
 	private CellPanelListener listener;
 
 	public CellPanel() {
-		addMouseListener(new CellPaneMouseAdapter(this));
+		addMouseListener(new CellPanelMouseAdapter(this));
 
 		this.iconPath = "";
 		this.labelIcon = new JLabel();
