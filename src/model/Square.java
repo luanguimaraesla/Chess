@@ -12,6 +12,7 @@ public class Square {
 
 	public static final int DEFAULT_SIZE = 64;
 	public static final String EMPTY_PATH = "";
+	public static final Color DEFAULT_COLOR = Color.WHITE;
 	public static final SquereListener EMPTY_LISTENER = null;
 
 	private Color color;
@@ -20,6 +21,18 @@ public class Square {
 	private String imagePath;
 	
 	private SquereListener squereListener;
+	
+	public Square() {
+		this(0, 0);
+	}
+	
+	public Square(int x, int y) {
+		this(new Point(x, y));
+	}
+	
+	public Square(Point position) {
+		this(position, DEFAULT_COLOR);
+	}
 
 	public Square(int x, int y, Color color) {
 		this(x, y, color, EMPTY_PATH);
@@ -82,6 +95,10 @@ public class Square {
 		return this.size;
 	}
 	
+	public boolean haveImagePath() {
+		return this.imagePath != EMPTY_PATH;
+	}
+	
 	public String getImagePath() {
 		return this.imagePath;
 	}
@@ -96,6 +113,10 @@ public class Square {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	public void setSquereListener(SquereListener squereListener) {
+		this.squereListener = squereListener;
 	}
 
 	private boolean haveSquereListener() {
