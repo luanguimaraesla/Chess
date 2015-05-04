@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -46,12 +45,7 @@ public class SquareBoardPanel extends JPanel {
 			gridBag.gridx = square.getPosition().y;
 			gridBag.gridy = square.getPosition().x;
 
-			SquarePanel squarePanel = new SquarePanel();
-
-			squarePanel.setSquare(square);
-			squarePanel.setBackground(square.getColor());
-			squarePanel.setPreferredSize(new Dimension(square.getSize(), square
-					.getSize()));
+			SquarePanel squarePanel = new SquarePanel(square);
 
 			add(squarePanel, gridBag);
 			this.squarePanelList.add(squarePanel);

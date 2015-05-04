@@ -5,11 +5,11 @@ import java.awt.event.MouseEvent;
 
 import model.Square;
 
-public class SquarePanelMouseAdapter extends MouseAdapter {
+public class SquareMouseAdapter extends MouseAdapter {
 
 	private Square square;
 	
-	public SquarePanelMouseAdapter(Square square) {
+	public SquareMouseAdapter(Square square) {
 		this.square = square;
 	}
 

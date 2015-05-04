@@ -125,6 +125,10 @@ public class Square {
 		return this.size;
 	}
 
+	public void setSize(Integer size) {
+		this.size = size;
+	}
+
 	public boolean haveImagePath() {
 		return this.imagePath != EMPTY_PATH;
 	}
