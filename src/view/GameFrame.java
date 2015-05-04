@@ -17,7 +17,7 @@ public class GameFrame extends JFrame {
 	public void initializeScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
-		add(new SquarePanel());
+		add(new SquareBoardPanel());
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);

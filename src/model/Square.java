@@ -6,11 +6,13 @@ import java.awt.Point;
 public class Square {
 
 	public interface SquareEventListener {
+		public void onOutEvent(Square square);
 		public void onHoverEvent(Square square);
 		public void onSelectEvent(Square square);
 	}
 	
 	public interface SquareChangeListener {
+		public void onColorChange(Square square);
 		public void onChangeImagePath(Square square);
 	}
 
@@ -79,6 +81,13 @@ public class Square {
 
 	public void removeImage() {
 		this.imagePath = EMPTY_PATH;
+		notifyOnChangeImagePath();
+	}
+	
+	public void notifyOnOutEvent() {
+		if(haveSquereEventListener()) {
+			this.squareEventListener.onOutEvent(this);
+		}
 	}
 	
 	public void notifyOnHoverEvent() {
@@ -90,6 +99,12 @@ public class Square {
 	public void notifyOnSelectEvent() {
 		if(haveSquereEventListener()) {
 			this.squareEventListener.onSelectEvent(this);
+		}
+	}
+	
+	public void notifyOnColorChange() {
+		if(haveSquareChangeListener()) {
+			this.squareChangeListener.onColorChange(this);
 		}
 	}
 	
@@ -126,6 +141,7 @@ public class Square {
 
 	public void setColor(Color color) {
 		this.color = color;
+		notifyOnColorChange();
 	}
 
 	public void setSquareEventListener(SquareEventListener squareEventListener) {

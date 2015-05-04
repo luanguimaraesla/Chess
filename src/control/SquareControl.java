@@ -62,6 +62,15 @@ public class SquareControl implements SquareEventListener {
 		}
 	}
 	
+	@Override
+	public void onOutEvent(Square square) {
+		if(this.selectedSquare != square) {
+			resetColor(square);
+		} else {
+			square.setColor(this.colorSelected);
+		}
+	}
+	
 	public Square getSquare(int row, int col) {
 		return this.squareList.get((row * COL_NUMBER) + col);
 	}
