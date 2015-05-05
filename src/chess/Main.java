@@ -11,7 +11,7 @@ import view.GameFrame;
 public class Main {
 
 	private static final String SCREEN_TYPE = "Nimbus";
-	
+
 	public static void main(String[] args) {
 		initializeScreen();
 	}
@@ -19,6 +19,14 @@ public class Main {
 	private static void initializeScreen() {
 		defineScreenType();
 		startScreenThread();
+	}
+
+	private static void startScreenThread() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new GameFrame().setVisible(true);
+			}
+		});
 	}
 
 	private static void defineScreenType() {
@@ -34,13 +42,4 @@ public class Main {
 			ex.printStackTrace();
 		}
 	}
-
-	private static void startScreenThread() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new GameFrame().setVisible(true);
-			}
-		});
-	}
-
 }

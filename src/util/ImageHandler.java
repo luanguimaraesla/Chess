@@ -7,12 +7,36 @@ import javax.swing.ImageIcon;
 
 public class ImageHandler {
 
-	private static Map<String, ImageIcon> iconMap = new TreeMap<String, ImageIcon>();
+	private static ImageHandler instance;
 
-	public static ImageIcon load(String iconPath) {
-		if (!iconMap.containsKey(iconPath)) {
-			iconMap.put(iconPath, new ImageIcon(iconPath));
-		}
-		return iconMap.get(iconPath);
+	private Map<String, ImageIcon> iconMap;
+
+	private ImageHandler() {
+		this.iconMap = new TreeMap<String, ImageIcon>();
 	}
+
+	public static ImageHandler getInstance() {
+		if (instance == null) {
+			instance = new ImageHandler();
+		}
+		return instance;
+	}
+
+	public static ImageIcon load(String imagePath) {
+		return ImageHandler.getInstance().loadImage(imagePath);
+	}
+
+	public ImageIcon loadImage(String imagePath) {
+		if (!haveImage(imagePath)) {
+			this.iconMap.put(imagePath, new ImageIcon(imagePath));
+			
+		}	
+		
+		return this.iconMap.get(imagePath);
+	}
+
+	public boolean haveImage(String imagePath) {
+		return this.iconMap.containsKey(imagePath);
+	}
+
 }
