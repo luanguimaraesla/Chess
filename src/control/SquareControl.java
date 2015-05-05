@@ -58,7 +58,11 @@ public class SquareControl implements SquareEventListener {
 	@Override
 	public void onSelectEvent(Square square) {
 		if (haveSelectedCellPanel()) {
-			moveContentOfSelectedSquare(square);
+			if (!this.selectedSquare.equals(square)) {
+				moveContentOfSelectedSquare(square);
+			} else {
+				unselectSquare(square);
+			}
 		} else {
 			selectSquare(square);
 		}
@@ -111,9 +115,8 @@ public class SquareControl implements SquareEventListener {
 
 	private void moveContentOfSelectedSquare(Square square) {
 		square.setImagePath(this.selectedSquare.getImagePath());
-		resetColor(this.selectedSquare);
 		this.selectedSquare.removeImage();
-		this.selectedSquare = EMPTY_SQUARE;
+		unselectSquare(square);
 	}
 
 	private void selectSquare(Square square) {
@@ -121,6 +124,11 @@ public class SquareControl implements SquareEventListener {
 			this.selectedSquare = square;
 			this.selectedSquare.setColor(this.colorSelected);
 		}
+	}
+
+	private void unselectSquare(Square square) {
+		resetColor(this.selectedSquare);
+		this.selectedSquare = EMPTY_SQUARE;
 	}
 
 	private void createSquares() {
