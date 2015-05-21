@@ -33,7 +33,7 @@ public class SquarePanel extends JPanel implements SquareChangeListener {
 		this.square = square;
 		this.square.setSquareChangeListener(this);
 		
-		this.labelIcon.setIcon(ImageHandler.load(square.getImagePath()));
+		this.labelIcon.setIcon(ImageHandler.load(square.havePiece() ? square.getPiece().getImagePath() : Square.NO_IMAGE_PATH));
 		setBackground(square.getColor());
 
 		this.dimension = new Dimension(this.square.getSize(), this.square.getSize());
@@ -43,7 +43,7 @@ public class SquarePanel extends JPanel implements SquareChangeListener {
 
 	@Override
 	public void onChangeImagePath(Square square) {
-		this.labelIcon.setIcon(ImageHandler.load(square.getImagePath()));
+		this.labelIcon.setIcon(ImageHandler.load(square.havePiece() ? square.getPiece().getImagePath() : Square.NO_IMAGE_PATH));
 	}
 
 	@Override

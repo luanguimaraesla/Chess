@@ -3,6 +3,7 @@ package model;
 import java.awt.Color;
 import java.awt.Point;
 
+
 public class Square {
 
 	public interface SquareEventListener {
@@ -20,15 +21,16 @@ public class Square {
 	}
 
 	public static final int DEFAULT_SIZE = 64;
-	public static final String EMPTY_PATH = "";
+	public static final String NO_IMAGE_PATH = "";
 	public static final Color DEFAULT_COLOR = Color.WHITE;
 	public static final SquareEventListener EMPTY_EVENT_LISTENER = null;
 	public static final SquareChangeListener EMPTY_CHANGE_LISTENER = null;
+	public static final Piece NO_PIECE = null;
 
 	private Color color;
 	private Integer size;
 	private Point position;
-	private String imagePath;
+	private Piece piece;
 
 	private SquareEventListener squareEventListener;
 	private SquareChangeListener squareChangeListener;
@@ -46,45 +48,45 @@ public class Square {
 	}
 
 	public Square(int x, int y, Color color) {
-		this(x, y, color, EMPTY_PATH);
+		this(x, y, color, NO_PIECE);
 	}
 
 	public Square(Point position, Color color) {
-		this(position, color, EMPTY_PATH);
+		this(position, color, NO_PIECE);
 	}
 
 	public Square(int x, int y, Color color, int size) {
-		this(x, y, color, EMPTY_PATH, size);
+		this(x, y, color, NO_PIECE, size);
 	}
 
 	public Square(Point position, Color color, int size) {
-		this(position, color, EMPTY_PATH, size);
+		this(position, color, NO_PIECE, size);
 	}
 
-	public Square(int x, int y, Color color, String imagePath) {
-		this(new Point(x, y), color, imagePath, DEFAULT_SIZE);
+	public Square(int x, int y, Color color, Piece piece) {
+		this(new Point(x, y), color, piece, DEFAULT_SIZE);
 	}
 
-	public Square(Point position, Color color, String imagePath) {
-		this(position, color, imagePath, DEFAULT_SIZE);
+	public Square(Point position, Color color, Piece piece) {
+		this(position, color, piece, DEFAULT_SIZE);
 	}
 
-	public Square(int x, int y, Color color, String imagePath, int size) {
-		this(new Point(x, y), color, imagePath, size);
+	public Square(int x, int y, Color color, Piece piece, int size) {
+		this(new Point(x, y), color, piece, size);
 	}
 
-	public Square(Point position, Color color, String imagePath, int size) {
+	public Square(Point position, Color color, Piece piece, int size) {
 		this.size = size;
 		this.color = color;
 		this.position = position;
-		this.imagePath = imagePath;
+		this.piece = piece;
 
 		this.squareEventListener = EMPTY_EVENT_LISTENER;
 	}
 
-	public void removeImage() {
-		this.imagePath = EMPTY_PATH;
-		notifyOnChangeImagePath();
+	public void removePiece() {
+		this.piece = NO_PIECE;
+		notifyOnChangeImagePath(); /*TROCAR ESSE NOME PARA notifyOnChangePiece*/
 	}
 
 	public void notifyOnOutEvent() {
@@ -129,16 +131,16 @@ public class Square {
 		this.size = size;
 	}
 
-	public boolean haveImagePath() {
-		return this.imagePath != EMPTY_PATH;
+	public boolean havePiece() {
+		return this.piece != NO_PIECE;
 	}
 
-	public String getImagePath() {
-		return this.imagePath;
+	public Piece getPiece() {
+		return this.piece;
 	}
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setPiece(Piece piece) {
+		this.piece = piece;
 		notifyOnChangeImagePath();
 	}
 
