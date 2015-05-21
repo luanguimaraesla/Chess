@@ -43,11 +43,7 @@ public class SquareControl implements SquareEventListener {
 	}
 
 	public void resetColor(Square square) {
-		int index = this.squareList.indexOf(square);
-		int row = index / COL_NUMBER;
-		int col = index % COL_NUMBER;
-
-		square.setColor(getGridColor(row, col));
+		square.setColor(getGridColor((int)(square.getPosition().getX()), (int)(square.getPosition().getY())));
 	}
 
 	@Override
@@ -96,8 +92,8 @@ public class SquareControl implements SquareEventListener {
 	private void addSquare() {
 		Square square = new Square();
 		this.squareList.add(square);
-		resetColor(square);
 		resetPosition(square);
+		resetColor(square);
 		square.setSquareEventListener(this);
 	}
 
