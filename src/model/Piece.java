@@ -4,33 +4,30 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public abstract class Piece {
-	public static final char PAWN = 'P';
-	public static final char TOWER = 'T';
-	public static final char HORSE = 'H';
-	public static final char BISHOP = 'B';
-	public static final char QUEEN = 'Q';
-	public static final char KING = 'K';
-	
-	private char id;
 	private String imagePath;
-	
-	public Piece (char id, String imagePath){
-		this.id = id;
-		this.imagePath = imagePath;
+	private Point position;
+
+	public Piece (String imagePath){
+		this(imagePath, new Point(0, 0));
 	}
 	
-	public abstract ArrayList<Point> getPossiblePoints();
+	public Piece(String imagePath, Point position){
+		setPosition(position);
+		setImagePath(imagePath);
+	}
 	
-	public char getId() {
-		return id;
-	}
-	public void setId(char id) {
-		this.id = id;
-	}
+	public abstract ArrayList<Point> getPossiblePoints(Point myPoint);
+
 	public String getImagePath() {
 		return imagePath;
 	}
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+	public Point getPosition() {
+		return position;
+	}
+	public void setPosition(Point position) {
+		this.position = position;
 	}
 }
