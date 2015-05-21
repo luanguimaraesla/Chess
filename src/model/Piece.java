@@ -1,6 +1,9 @@
 package model;
 
-public class Piece {
+import java.awt.Point;
+import java.util.ArrayList;
+
+public abstract class Piece {
 	public static final char PAWN = 'P';
 	public static final char TOWER = 'T';
 	public static final char HORSE = 'H';
@@ -15,6 +18,8 @@ public class Piece {
 		this.id = id;
 		this.imagePath = imagePath;
 	}
+	
+	public abstract ArrayList<Point> getPossiblePoints();
 	
 	public char getId() {
 		return id;
