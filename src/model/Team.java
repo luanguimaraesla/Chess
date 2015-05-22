@@ -2,23 +2,18 @@ package model;
 
 import java.util.ArrayList;
 
-public abstract class Team {
-	private ArrayList<Piece> pieces;
+public class Team extends ArrayList<Piece>{
+	
+	private static final long serialVersionUID = 1L;
+	public static final int TEAM_UP = 1;
+	public static final int TEAM_DOWN = 0;
+	
 	private boolean stillKingAlive;
+	private int teamOrientation;
 	
-	public Team (){
+	public Team (int teamOrientation){
 		this.stillKingAlive = true;
-		this.pieces = null;
-	}
-	
-	public abstract ArrayList<Piece> initPieces();
-
-	public ArrayList<Piece> getPieces() {
-		return pieces;
-	}
-
-	public void setPieces(ArrayList<Piece> pieces) {
-		this.pieces = pieces;
+		this.setTeamOrientation(teamOrientation);
 	}
 	
 	public boolean stillKingAlive() {
@@ -27,6 +22,14 @@ public abstract class Team {
 
 	public void killKing() {
 		this.stillKingAlive = false;
+	}
+
+	public int getTeamOrientation() {
+		return teamOrientation;
+	}
+
+	public void setTeamOrientation(int teamOrientation) {
+		this.teamOrientation = teamOrientation;
 	}
 	
 }
