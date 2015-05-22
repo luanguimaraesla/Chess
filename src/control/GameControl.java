@@ -49,7 +49,7 @@ public class GameControl {
 		}else if(piece instanceof Tower){
 			
 		}else if(piece instanceof Horse){
-			
+			return validHorseDestinationPoints(piece, pieceTeam, rivalTeam);
 		}else if(piece instanceof Bishop){
 			
 		}else if(piece instanceof Queen){
@@ -60,16 +60,25 @@ public class GameControl {
 		return null;
 	}
 	
+	public ArrayList<Point> validHorseDestinationPoints(Piece piece, Team pieceTeam, Team rivalTeam){
+		ArrayList<Point> validDestinationPoints = new ArrayList<Point>();
+		
+		for(Point eachPoint : piece.getPossiblePoints())
+			if(!pieceTeam.ContainsPieceAt(eachPoint) && this.squareControl.isPointValid(eachPoint))
+				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+		
+		return validDestinationPoints;
+	}
+	
 	public ArrayList<Point> validPawnDestinationPoints(Piece piece, Team pieceTeam, Team rivalTeam){
 		ArrayList<Point> validDestinationPoints = new ArrayList<Point>();
-		ArrayList<Point> possiblePoints = piece.getPossiblePoints();
 		int invalidLineConstant, x, y;
 			
 		if(pieceTeam.getTeamOrientation() == Team.TEAM_DOWN)
 			invalidLineConstant = 1;
 		else invalidLineConstant = -1;
 		
-		for(Point eachPoint : possiblePoints){
+		for(Point eachPoint : piece.getPossiblePoints()){
 			x = (int) eachPoint.getX();
 			y = (int) eachPoint.getY();
 			if(x != (int)(piece.getPosition().getX() + invalidLineConstant) && this.squareControl.isPointValid(eachPoint) && 
