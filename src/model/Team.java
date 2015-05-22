@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 public class Team extends ArrayList<Piece>{
@@ -14,6 +15,22 @@ public class Team extends ArrayList<Piece>{
 	public Team (int teamOrientation){
 		this.stillKingAlive = true;
 		this.setTeamOrientation(teamOrientation);
+	}
+	
+	public boolean ContainsPieceAt(Point point){
+		for(Piece eachPiece : this)
+			if (eachPiece.getPosition().getX() == point.getX() &&
+				eachPiece.getPosition().getY() == point.getY())
+				return true;
+		return false;
+	}
+	
+	public boolean ContainsPieceAt(int x, int y){
+		for(Piece eachPiece : this)
+			if ((int) eachPiece.getPosition().getX() == x &&
+				(int) eachPiece.getPosition().getY() == y)
+				return true;
+		return false;
 	}
 	
 	public boolean stillKingAlive() {
