@@ -18,8 +18,25 @@ public class Pawn extends Piece {
 	}
 	
 	@Override
-	public ArrayList<Point> getPossiblePoints(Point myPoint){	
-		return null;
+	public ArrayList<Point> getPossiblePoints(){
+		ArrayList<Point> possiblePointsToGo = new ArrayList<Point>();
+		for (int i = -1; i <= 1; i++){
+			possiblePointsToGo.add(new Point((int)this.getPosition().getX() + 1, (int)this.getPosition().getY() + i));
+			possiblePointsToGo.add(new Point((int)this.getPosition().getX() - 1, (int)this.getPosition().getY() + i));
+		}
+		
+		if (!alreadyMooved()){
+			possiblePointsToGo.add(new Point ((int) this.getPosition().getX() + 2, (int) this.getPosition().getY()));
+			possiblePointsToGo.add(new Point ((int) this.getPosition().getX() - 2, (int) this.getPosition().getY()));
+		}
+		
+		return possiblePointsToGo;
+	}
+	
+	@Override
+	public void move(Point newPosition){
+		setPosition(newPosition);
+		this.mooved = true;
 	}
 	
 	public boolean alreadyMooved(){
