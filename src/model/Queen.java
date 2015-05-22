@@ -14,7 +14,7 @@ public class Queen extends Piece {
 	}
 	
 	@Override
-	public ArrayList<Point> getPossiblePoints(Point myPoint){	
+	public ArrayList<Point> getPossiblePoints(){	
 		return null;
 	}
 }

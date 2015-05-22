@@ -16,7 +16,11 @@ public abstract class Piece {
 		setImagePath(imagePath);
 	}
 	
-	public abstract ArrayList<Point> getPossiblePoints(Point myPoint);
+	public abstract ArrayList<Point> getPossiblePoints();
+	
+	public void move(Point newPosition){
+		setPosition(newPosition);
+	}
 
 	public String getImagePath() {
 		return imagePath;
