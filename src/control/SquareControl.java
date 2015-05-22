@@ -1,10 +1,14 @@
 package control;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
 
+import model.Piece;
 import model.Square;
 import model.Square.SquareEventListener;
+
+import util.FalseMovementException;
 
 public class SquareControl implements SquareEventListener {
 
@@ -25,6 +29,7 @@ public class SquareControl implements SquareEventListener {
 
 	private Square selectedSquare;
 	private ArrayList<Square> squareList;
+	private GameControl gameControl;
 
 	public SquareControl() {
 		this(DEFAULT_COLOR_ONE, DEFAULT_COLOR_TWO, DEFAULT_COLOR_HOVER,
@@ -52,16 +57,19 @@ public class SquareControl implements SquareEventListener {
 	}
 
 	@Override
-	public void onSelectEvent(Square square) {
+	public void onSelectEvent(Square square){
 		if (haveSelectedCellPanel()) {
-			if (!this.selectedSquare.equals(square)) {
-				moveContentOfSelectedSquare(square);
-			} else {
-				unselectSquare(square);
-			}
-		} else {
+			if (!this.selectedSquare.equals(square)){
+				try{
+					moveContentOfSelectedSquare(square);
+				}catch(FalseMovementException ex){
+					System.out.println("BAD MOVEMENT!");
+					unselectSquare(square);
+				}
+			}else
+				unselectSquare(square);	
+		} else
 			selectSquare(square);
-		}
 	}
 
 	@Override
@@ -73,8 +81,9 @@ public class SquareControl implements SquareEventListener {
 		}
 	}
 
-	public Square getSquare(int row, int col) {
+	public Square getSquare(int row, int col){
 		return this.squareList.get((row * COL_NUMBER) + col);
+		
 	}
 
 	public ArrayList<Square> getSquareList() {
@@ -109,10 +118,25 @@ public class SquareControl implements SquareEventListener {
 		return this.selectedSquare != EMPTY_SQUARE;
 	}
 
-	private void moveContentOfSelectedSquare(Square square) {
+	private void moveContentOfSelectedSquare(Square square) throws FalseMovementException{
+		Piece selectedPiece = selectedSquare.getPiece();
+		
+		
+		if(!this.gameControl.isMovementValid(square.getPosition(), selectedPiece))
+			throw new FalseMovementException();
+		
 		square.setPiece(this.selectedSquare.getPiece());
+		square.getPiece().move(square.getPosition());
 		this.selectedSquare.removePiece();
 		unselectSquare(square);
+	}
+
+	public GameControl getGameControl() {
+		return gameControl;
+	}
+
+	public void setGameControl(GameControl gameControl) {
+		this.gameControl = gameControl;
 	}
 
 	private void selectSquare(Square square) {
@@ -120,6 +144,13 @@ public class SquareControl implements SquareEventListener {
 			this.selectedSquare = square;
 			this.selectedSquare.setColor(this.colorSelected);
 		}
+	}
+	
+	public boolean isPointValid(Point point){
+		int x = (int) point.getX(), y = (int) point.getY();
+		if(x < SquareControl.ROW_NUMBER && y < SquareControl.COL_NUMBER && x >= 0 &&  y >= 0)
+			return true;
+		return false;
 	}
 
 	private void unselectSquare(Square square) {

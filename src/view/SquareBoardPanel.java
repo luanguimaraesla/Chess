@@ -23,9 +23,8 @@ public class SquareBoardPanel extends JPanel {
 	public SquareBoardPanel() {
 		setLayout(new GridBagLayout());
 		this.squarePanelList = new ArrayList<SquarePanel>();
-		this.gameControl = new GameControl();
-		
 		initializeSquareControl();
+		initializeGameControl();
 		initializeGrid();
 		initializePiecesInChess();
 	}
@@ -38,6 +37,11 @@ public class SquareBoardPanel extends JPanel {
 
 		this.squareControl = new SquareControl(colorOne, colorTwo, colorHover,
 				colorSelected);
+	}
+	
+	private void initializeGameControl(){
+		this.gameControl = new GameControl(this.squareControl);
+		this.squareControl.setGameControl(this.gameControl);
 	}
 
 	private void initializeGrid() {
@@ -58,14 +62,20 @@ public class SquareBoardPanel extends JPanel {
 	}
 
 	private void initializePiecesInChess() {
-		for (Piece eachPiece : gameControl.getBrownTeam()) {
+		for (Piece eachPiece : this.gameControl.getBrownTeam()) {
 			this.squareControl.getSquare((int)(eachPiece.getPosition().getX()),
 										(int)(eachPiece.getPosition().getY())).setPiece(eachPiece);
+			
+			eachPiece.setPosition(this.squareControl.getSquare((int)(eachPiece.getPosition().getX()),
+					(int)(eachPiece.getPosition().getY())).getPosition());
 		}
 		
-		for (Piece eachPiece : gameControl.getWhiteTeam()) {
+		for (Piece eachPiece : this.gameControl.getWhiteTeam()) {
 			this.squareControl.getSquare((int)(eachPiece.getPosition().getX()),
 										(int)(eachPiece.getPosition().getY())).setPiece(eachPiece);
+			
+			eachPiece.setPosition(this.squareControl.getSquare((int)(eachPiece.getPosition().getX()),
+					(int)(eachPiece.getPosition().getY())).getPosition());
 		}
 		
 	}
