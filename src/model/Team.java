@@ -18,17 +18,13 @@ public class Team extends ArrayList<Piece>{
 	}
 	
 	public boolean ContainsPieceAt(Point point){
-		for(Piece eachPiece : this)
-			if (eachPiece.getPosition().getX() == point.getX() &&
-				eachPiece.getPosition().getY() == point.getY())
-				return true;
-		return false;
+		return ContainsPieceAt(point.getX(), point.getY());
 	}
 	
-	public boolean ContainsPieceAt(int x, int y){
+	public boolean ContainsPieceAt(double x, double y){
 		for(Piece eachPiece : this)
-			if ((int) eachPiece.getPosition().getX() == x &&
-				(int) eachPiece.getPosition().getY() == y)
+			if (eachPiece.getPosition().getX() == x &&
+				eachPiece.getPosition().getY() == y)
 				return true;
 		return false;
 	}
