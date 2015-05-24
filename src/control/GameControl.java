@@ -47,11 +47,19 @@ public class GameControl {
 		}else if(piece instanceof Bishop){
 			return validBishopDestinationPoints(piece, pieceTeam, rivalTeam);
 		}else if(piece instanceof Queen){
-			
+			return validQueenDestinationPoints(piece, pieceTeam, rivalTeam);
 		}else if(piece instanceof King){
 			
 		}
 		return null;
+	}
+	
+	public ArrayList<Point> validQueenDestinationPoints(Piece piece, Team pieceTeam, Team rivalTeam){
+		ArrayList<Point> validDestinationPoints = validBishopDestinationPoints(piece, pieceTeam, rivalTeam);
+		for (Point eachPoint : validTowerDestinationPoints(piece, pieceTeam, rivalTeam))
+			validDestinationPoints.add(eachPoint);
+		
+		return validDestinationPoints;
 	}
 	
 	public ArrayList<Point> validBishopDestinationPoints(Piece piece, Team pieceTeam, Team rivalTeam){
