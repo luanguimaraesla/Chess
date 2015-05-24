@@ -121,9 +121,11 @@ public class SquareControl implements SquareEventListener {
 	private void moveContentOfSelectedSquare(Square square) throws FalseMovementException{
 		Piece selectedPiece = selectedSquare.getPiece();
 		
-		
 		if(!this.gameControl.isMovementValid(square.getPosition(), selectedPiece))
 			throw new FalseMovementException();
+		
+		if(square.getPiece() != Square.NO_PIECE)
+			this.gameControl.getPieceTeam(square.getPiece()).remove(square.getPiece());
 		
 		square.setPiece(this.selectedSquare.getPiece());
 		square.getPiece().move(square.getPosition());
