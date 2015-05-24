@@ -45,7 +45,7 @@ public class GameControl {
 		}else if(piece instanceof Horse){
 			return validHorseDestinationPoints(piece, pieceTeam);
 		}else if(piece instanceof Bishop){
-			//return validBishopDestinationPoints(piece, pieceTeam, rivalTeam);
+			return validBishopDestinationPoints(piece, pieceTeam, rivalTeam);
 		}else if(piece instanceof Queen){
 			
 		}else if(piece instanceof King){
@@ -54,7 +54,40 @@ public class GameControl {
 		return null;
 	}
 	
-	
+	public ArrayList<Point> validBishopDestinationPoints(Piece piece, Team pieceTeam, Team rivalTeam){
+		ArrayList<Point> validDestinationPoints = new ArrayList<Point>();
+		ArrayList<Point> possiblePointsToGo = piece.getPossiblePoints();
+		double x = piece.getPosition().getX(), y = piece.getPosition().getY();
+		double limitNW, limitNE, limitSW, limitSE;
+		limitNW = limitNE = -1;
+		limitSW = limitSE = SquareControl.COL_NUMBER;
+		
+		for(Point eachPoint : possiblePointsToGo){
+			if(rivalTeam.ContainsPieceAt(eachPoint) || pieceTeam.ContainsPieceAt(eachPoint)){			
+				if(eachPoint.getX() < x && eachPoint.getY() < y && Math.abs(eachPoint.getX() - x) < Math.abs(limitNW - x))
+					limitNW = rivalTeam.ContainsPieceAt(eachPoint) ? eachPoint.getX() - 1 : eachPoint.getX();
+				else if(eachPoint.getX() < x && eachPoint.getY() > y && Math.abs(eachPoint.getX() - x) < Math.abs(limitNE - x))
+					limitNE = rivalTeam.ContainsPieceAt(eachPoint) ? eachPoint.getX() - 1 : eachPoint.getX();
+				if(eachPoint.getX() > x && eachPoint.getY() < y && Math.abs(eachPoint.getX() - x) < Math.abs(limitSW - x))
+					limitSW = rivalTeam.ContainsPieceAt(eachPoint) ? eachPoint.getX() + 1 : eachPoint.getX();
+				else if(eachPoint.getX() > x && eachPoint.getY() > y && Math.abs(eachPoint.getX() - x) < Math.abs(limitSE - x))
+					limitSE = rivalTeam.ContainsPieceAt(eachPoint) ? eachPoint.getX() + 1 : eachPoint.getX();
+			}
+		}
+		
+		for(Point eachPoint : possiblePointsToGo){			
+			if(eachPoint.getX() < x && eachPoint.getY() < y && (eachPoint.getX() > limitNW || limitNW == SquareControl.COL_NUMBER))
+				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+			else if(eachPoint.getX() < x && eachPoint.getY() > y && (eachPoint.getX() > limitNE || limitNE == SquareControl.COL_NUMBER))
+				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+			if(eachPoint.getX() > x && eachPoint.getY() < y && (eachPoint.getX() < limitSW || limitSW == SquareControl.COL_NUMBER))
+				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+			else if(eachPoint.getX() > x && eachPoint.getY() > y && (eachPoint.getX() < limitSE || limitSE == SquareControl.COL_NUMBER))
+				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+		}
+			
+		return validDestinationPoints;
+	}
 	
 	public ArrayList<Point> validTowerDestinationPoints(Piece tower, Team pieceTeam, Team rivalTeam){
 		ArrayList<Point> validDestinationPoints = new ArrayList<Point>();
