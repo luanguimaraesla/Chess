@@ -19,7 +19,22 @@ public class Tower extends Piece {
 	
 	@Override
 	public ArrayList<Point> getPossiblePoints(){	
-		return null;
+		ArrayList<Point> possiblePoints = new ArrayList<Point>();
+		int x = (int)getPosition().getX();
+		int y = (int)getPosition().getY();
+		
+		for(int i = 0; i < 8; i++){
+			if(i != y)
+				possiblePoints.add(new Point(x, i));
+			if(i != x)
+				possiblePoints.add(new Point(i, y));
+		}
+		
+		for(Point aPoint : possiblePoints){
+			System.out.println("**POINT: (" + String.valueOf(aPoint.getX()) + ", " + String.valueOf(aPoint.getY()) +")" );
+		}
+		
+		return possiblePoints;
 	}
 	
 	public boolean alreadyMooved(){

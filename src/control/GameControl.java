@@ -32,26 +32,20 @@ public class GameControl {
 	}
 	
 	public ArrayList<Point> getValidPieceMovements(Piece piece){
-		Team pieceTeam;
+		Team pieceTeam = getPieceTeam(piece);
 		Team rivalTeam;
 		
-		if(this.brownTeam.contains(piece)){
-			pieceTeam = brownTeam;
-			rivalTeam = whiteTeam;
-		}
-		else{
-			pieceTeam = whiteTeam;
-			rivalTeam = brownTeam;
-		}
+		if(pieceTeam == this.brownTeam) rivalTeam = this.whiteTeam;
+		else rivalTeam = brownTeam;
 		
 		if(piece instanceof Pawn){
 			return validPawnDestinationPoints(piece, pieceTeam, rivalTeam);
 		}else if(piece instanceof Tower){
-			
+			return validTowerDestinationPoints(piece, pieceTeam, rivalTeam);
 		}else if(piece instanceof Horse){
-			return validHorseDestinationPoints(piece, pieceTeam, rivalTeam);
+			return validHorseDestinationPoints(piece, pieceTeam);
 		}else if(piece instanceof Bishop){
-			
+			//return validBishopDestinationPoints(piece, pieceTeam, rivalTeam);
 		}else if(piece instanceof Queen){
 			
 		}else if(piece instanceof King){
@@ -60,7 +54,45 @@ public class GameControl {
 		return null;
 	}
 	
-	public ArrayList<Point> validHorseDestinationPoints(Piece piece, Team pieceTeam, Team rivalTeam){
+	
+	
+	public ArrayList<Point> validTowerDestinationPoints(Piece tower, Team pieceTeam, Team rivalTeam){
+		ArrayList<Point> validDestinationPoints = new ArrayList<Point>();
+		ArrayList<Point> possiblePointsToGo = tower.getPossiblePoints();
+		double x = tower.getPosition().getX();
+		double y = tower.getPosition().getY();
+		double limitUp, limitDown, limitLeft, limitRight;
+		limitDown = limitRight = SquareControl.COL_NUMBER;
+		limitUp = limitLeft = -1;
+		
+		for(Point eachPoint : possiblePointsToGo){
+			if(rivalTeam.ContainsPieceAt(eachPoint) || pieceTeam.ContainsPieceAt(eachPoint)){			
+				if(eachPoint.getX() < x && eachPoint.getX() > limitUp)
+					limitUp = rivalTeam.ContainsPieceAt(eachPoint) ? eachPoint.getX() - 1 : eachPoint.getX();
+				else if(eachPoint.getX() > x && eachPoint.getX() < limitDown)
+					limitDown = rivalTeam.ContainsPieceAt(eachPoint) ? eachPoint.getX() + 1 : eachPoint.getX();
+				if(eachPoint.getY() < y && eachPoint.getY() > limitLeft)
+					limitLeft = rivalTeam.ContainsPieceAt(eachPoint) ? eachPoint.getY() - 1 : eachPoint.getY();
+				else if(eachPoint.getY() > y && eachPoint.getY() < limitRight)
+					limitRight = rivalTeam.ContainsPieceAt(eachPoint) ? eachPoint.getY() + 1 : eachPoint.getY();
+			}
+		}
+		
+		for(Point eachPoint : possiblePointsToGo){			
+			if(eachPoint.getX() < x && eachPoint.getX() > limitUp)
+				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+			else if(eachPoint.getX() > x && eachPoint.getX() < limitDown)
+				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+			if(eachPoint.getY() < y && eachPoint.getY() > limitLeft)
+				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+			else if(eachPoint.getY() > y && eachPoint.getY() < limitRight)
+				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+		}
+		
+		return validDestinationPoints;
+	}
+	
+	public ArrayList<Point> validHorseDestinationPoints(Piece piece, Team pieceTeam){
 		ArrayList<Point> validDestinationPoints = new ArrayList<Point>();
 		
 		for(Point eachPoint : piece.getPossiblePoints())
@@ -81,7 +113,8 @@ public class GameControl {
 		for(Point eachPoint : piece.getPossiblePoints()){
 			x = (int) eachPoint.getX();
 			y = (int) eachPoint.getY();
-			if(x != (int)(piece.getPosition().getX() + invalidLineConstant) && this.squareControl.isPointValid(eachPoint) && 
+			if(x != (int)(piece.getPosition().getX() + invalidLineConstant) && 
+				this.squareControl.isPointValid(eachPoint) && 
 				x != (int)(piece.getPosition().getX() + 2 * invalidLineConstant)){
 				if(rivalTeam.ContainsPieceAt(eachPoint) && y != piece.getPosition().getY())
 					validDestinationPoints.add(getSquareSamePosition(eachPoint));
@@ -92,6 +125,11 @@ public class GameControl {
 			}
 		}
 		return validDestinationPoints;
+	}
+	
+	public Team getPieceTeam(Piece piece){
+		if(this.brownTeam.contains(piece)) return this.brownTeam;
+		else return this.whiteTeam;
 	}
 	
 	private Point getSquareSamePosition(Point point){
