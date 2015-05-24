@@ -30,10 +30,6 @@ public class Tower extends Piece {
 				possiblePoints.add(new Point(i, y));
 		}
 		
-		for(Point aPoint : possiblePoints){
-			System.out.println("**POINT: (" + String.valueOf(aPoint.getX()) + ", " + String.valueOf(aPoint.getY()) +")" );
-		}
-		
 		return possiblePoints;
 	}
 	
