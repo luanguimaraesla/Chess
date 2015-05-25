@@ -49,9 +49,12 @@ public class GameControl {
 		}else if(piece instanceof Queen){
 			return validQueenDestinationPoints(piece, pieceTeam, rivalTeam);
 		}else if(piece instanceof King){
-			
+			return validKingDestinationPoints(piece, pieceTeam, rivalTeam);
 		}
 		return null;
+	}
+	public ArrayList<Point> validKingDestinationPoints(Piece piece, Team pieceTeam, Team rivalTeam){
+		return validQueenDestinationPoints(piece, pieceTeam, rivalTeam);
 	}
 	
 	public ArrayList<Point> validQueenDestinationPoints(Piece piece, Team pieceTeam, Team rivalTeam){
@@ -71,7 +74,8 @@ public class GameControl {
 		limitSW = limitSE = SquareControl.COL_NUMBER;
 		
 		for(Point eachPoint : possiblePointsToGo){
-			if(rivalTeam.ContainsPieceAt(eachPoint) || pieceTeam.ContainsPieceAt(eachPoint)){			
+			if((rivalTeam.ContainsPieceAt(eachPoint) || pieceTeam.ContainsPieceAt(eachPoint))
+			    && !(eachPoint.getX() == x || eachPoint.getY() == y)){			
 				if(eachPoint.getX() < x && eachPoint.getY() < y && Math.abs(eachPoint.getX() - x) < Math.abs(limitNW - x))
 					limitNW = rivalTeam.ContainsPieceAt(eachPoint) ? eachPoint.getX() - 1 : eachPoint.getX();
 				else if(eachPoint.getX() < x && eachPoint.getY() > y && Math.abs(eachPoint.getX() - x) < Math.abs(limitNE - x))
@@ -83,15 +87,17 @@ public class GameControl {
 			}
 		}
 		
-		for(Point eachPoint : possiblePointsToGo){			
-			if(eachPoint.getX() < x && eachPoint.getY() < y && (eachPoint.getX() > limitNW || limitNW == SquareControl.COL_NUMBER))
-				validDestinationPoints.add(getSquareSamePosition(eachPoint));
-			else if(eachPoint.getX() < x && eachPoint.getY() > y && (eachPoint.getX() > limitNE || limitNE == SquareControl.COL_NUMBER))
-				validDestinationPoints.add(getSquareSamePosition(eachPoint));
-			if(eachPoint.getX() > x && eachPoint.getY() < y && (eachPoint.getX() < limitSW || limitSW == SquareControl.COL_NUMBER))
-				validDestinationPoints.add(getSquareSamePosition(eachPoint));
-			else if(eachPoint.getX() > x && eachPoint.getY() > y && (eachPoint.getX() < limitSE || limitSE == SquareControl.COL_NUMBER))
-				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+		for(Point eachPoint : possiblePointsToGo){
+			if(this.squareControl.isPointValid(eachPoint) && !(eachPoint.getX() == x || eachPoint.getY() == y)){
+				if(eachPoint.getX() < x && eachPoint.getY() < y && (eachPoint.getX() > limitNW || limitNW == SquareControl.COL_NUMBER))
+					validDestinationPoints.add(getSquareSamePosition(eachPoint));
+				else if(eachPoint.getX() < x && eachPoint.getY() > y && (eachPoint.getX() > limitNE || limitNE == SquareControl.COL_NUMBER))
+					validDestinationPoints.add(getSquareSamePosition(eachPoint));
+				if(eachPoint.getX() > x && eachPoint.getY() < y && (eachPoint.getX() < limitSW || limitSW == SquareControl.COL_NUMBER))
+					validDestinationPoints.add(getSquareSamePosition(eachPoint));
+				else if(eachPoint.getX() > x && eachPoint.getY() > y && (eachPoint.getX() < limitSE || limitSE == SquareControl.COL_NUMBER))
+					validDestinationPoints.add(getSquareSamePosition(eachPoint));
+			}
 		}
 			
 		return validDestinationPoints;
@@ -107,7 +113,8 @@ public class GameControl {
 		limitUp = limitLeft = -1;
 		
 		for(Point eachPoint : possiblePointsToGo){
-			if(rivalTeam.ContainsPieceAt(eachPoint) || pieceTeam.ContainsPieceAt(eachPoint)){			
+			if((rivalTeam.ContainsPieceAt(eachPoint) || pieceTeam.ContainsPieceAt(eachPoint)) && 
+					(eachPoint.getX() == x || eachPoint.getY() == y)){				
 				if(eachPoint.getX() < x && eachPoint.getX() > limitUp)
 					limitUp = rivalTeam.ContainsPieceAt(eachPoint) ? eachPoint.getX() - 1 : eachPoint.getX();
 				else if(eachPoint.getX() > x && eachPoint.getX() < limitDown)
@@ -119,16 +126,29 @@ public class GameControl {
 			}
 		}
 		
-		for(Point eachPoint : possiblePointsToGo){			
-			if(eachPoint.getX() < x && eachPoint.getX() > limitUp)
-				validDestinationPoints.add(getSquareSamePosition(eachPoint));
-			else if(eachPoint.getX() > x && eachPoint.getX() < limitDown)
-				validDestinationPoints.add(getSquareSamePosition(eachPoint));
-			if(eachPoint.getY() < y && eachPoint.getY() > limitLeft)
-				validDestinationPoints.add(getSquareSamePosition(eachPoint));
-			else if(eachPoint.getY() > y && eachPoint.getY() < limitRight)
-				validDestinationPoints.add(getSquareSamePosition(eachPoint));
+		System.out.println("Left: "+ String.valueOf(limitLeft) + " Right: "+ String.valueOf(limitRight) + 
+							" Up: "+ String.valueOf(limitUp) + " Down: "+ String.valueOf(limitDown) + "\n");
+		
+		for(Point eachPoint : possiblePointsToGo){
+			if(this.squareControl.isPointValid(eachPoint) && (eachPoint.getX() == x || eachPoint.getY() == y)){
+				if(eachPoint.getX() < x && eachPoint.getX() > limitUp)
+					validDestinationPoints.add(getSquareSamePosition(eachPoint));
+				else if(eachPoint.getX() > x && eachPoint.getX() < limitDown)
+					validDestinationPoints.add(getSquareSamePosition(eachPoint));
+				if(eachPoint.getY() < y && eachPoint.getY() > limitLeft)
+					validDestinationPoints.add(getSquareSamePosition(eachPoint));
+				else if(eachPoint.getY() > y && eachPoint.getY() < limitRight)
+					validDestinationPoints.add(getSquareSamePosition(eachPoint));
+			}
 		}
+		
+		for(Point eachPoint : possiblePointsToGo)
+			System.out.println("X: " + String.valueOf(eachPoint.getX()) + " Y: " + String.valueOf(eachPoint.getY()));
+		System.out.println("\n");
+		
+		for(Point eachPoint : validDestinationPoints)
+			System.out.println("X: " + String.valueOf(eachPoint.getX()) + " Y: " + String.valueOf(eachPoint.getY()));
+		System.out.println("\n");
 		
 		return validDestinationPoints;
 	}
