@@ -20,9 +20,9 @@ public class GameControl {
 	
 	public GameControl(SquareControl squareControl){
 		this.squareControl = squareControl;
-		TeamControl teamControler = new TeamControl();
-		this.brownTeam = teamControler.createTeam(Team.TEAM_UP);
-		this.whiteTeam = teamControler.createTeam(Team.TEAM_DOWN);
+		TeamSetup teamSetup = new TeamSetup();
+		this.brownTeam = teamSetup.createTeam(Team.TEAM_UP);
+		this.whiteTeam = teamSetup.createTeam(Team.TEAM_DOWN);
 	}
 
 	public boolean isMovementValid(Point point, Piece piece){
@@ -33,10 +33,7 @@ public class GameControl {
 	
 	public ArrayList<Point> getValidPieceMovements(Piece piece){
 		Team pieceTeam = getPieceTeam(piece);
-		Team rivalTeam;
-		
-		if(pieceTeam == this.brownTeam) rivalTeam = this.whiteTeam;
-		else rivalTeam = brownTeam;
+		Team rivalTeam = getRivalTeam(piece);
 		
 		if(piece instanceof Pawn){
 			return validPawnDestinationPoints(piece, pieceTeam, rivalTeam);
@@ -126,9 +123,6 @@ public class GameControl {
 			}
 		}
 		
-		System.out.println("Left: "+ String.valueOf(limitLeft) + " Right: "+ String.valueOf(limitRight) + 
-							" Up: "+ String.valueOf(limitUp) + " Down: "+ String.valueOf(limitDown) + "\n");
-		
 		for(Point eachPoint : possiblePointsToGo){
 			if(this.squareControl.isPointValid(eachPoint) && (eachPoint.getX() == x || eachPoint.getY() == y)){
 				if(eachPoint.getX() < x && eachPoint.getX() > limitUp)
@@ -141,14 +135,6 @@ public class GameControl {
 					validDestinationPoints.add(getSquareSamePosition(eachPoint));
 			}
 		}
-		
-		for(Point eachPoint : possiblePointsToGo)
-			System.out.println("X: " + String.valueOf(eachPoint.getX()) + " Y: " + String.valueOf(eachPoint.getY()));
-		System.out.println("\n");
-		
-		for(Point eachPoint : validDestinationPoints)
-			System.out.println("X: " + String.valueOf(eachPoint.getX()) + " Y: " + String.valueOf(eachPoint.getY()));
-		System.out.println("\n");
 		
 		return validDestinationPoints;
 	}
@@ -188,9 +174,26 @@ public class GameControl {
 		return validDestinationPoints;
 	}
 	
+	public boolean checkIsOnCheckmat(Piece king){
+		for(Piece eachRivalPiece : getRivalTeam(king))
+			if(getValidPieceMovements(eachRivalPiece).contains(king.getPosition()))
+				return true;
+		return false;
+	}
+	
+	public boolean checkIsOnCheckmat(Team team){
+		return checkIsOnCheckmat(team.getKing());
+	}
+	
 	public Team getPieceTeam(Piece piece){
 		if(this.brownTeam.contains(piece)) return this.brownTeam;
 		else return this.whiteTeam;
+	}
+	
+	public Team getRivalTeam(Piece piece){
+		if(getPieceTeam(piece) == this.brownTeam)
+			return this.whiteTeam;
+		return this.brownTeam;
 	}
 	
 	private Point getSquareSamePosition(Point point){
@@ -213,7 +216,5 @@ public class GameControl {
 	public void setWhiteTeam(Team whiteTeam) {
 		this.whiteTeam = whiteTeam;
 	}
-	
-	
-	
+		
 }

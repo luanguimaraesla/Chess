@@ -34,9 +34,11 @@ public class SquareBoardPanel extends JPanel {
 		Color colorTwo = Color.GRAY;
 		Color colorHover = Color.BLUE;
 		Color colorSelected = Color.GREEN;
+		Color colorCheckmat = Color.RED;
+		Color colorPossibleMovements = Color.YELLOW;
 
 		this.squareControl = new SquareControl(colorOne, colorTwo, colorHover,
-				colorSelected);
+				colorSelected, colorCheckmat, colorPossibleMovements);
 	}
 	
 	private void initializeGameControl(){
