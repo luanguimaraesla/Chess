@@ -36,6 +36,14 @@ public class Team extends ArrayList<Piece>{
 	public void killKing() {
 		this.stillKingAlive = false;
 	}
+	
+	public Piece getKing(){
+		for(Piece kingSearch : this)
+			if(kingSearch instanceof King)
+				return kingSearch;
+		
+		return null;
+	}
 
 	public int getTeamOrientation() {
 		return teamOrientation;
@@ -43,6 +51,13 @@ public class Team extends ArrayList<Piece>{
 
 	public void setTeamOrientation(int teamOrientation) {
 		this.teamOrientation = teamOrientation;
+	}
+	
+	public boolean kill(Piece piece){
+		if(piece instanceof King)
+			killKing();
+		
+		return this.remove(piece);
 	}
 	
 }

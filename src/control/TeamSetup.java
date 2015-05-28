@@ -10,7 +10,7 @@ import model.Horse;
 import model.Tower;
 import model.Pawn;
 
-public class TeamControl {
+public class TeamSetup {
 
 	public Team createTeam(int teamOrientation){
 		return teamOrientation == Team.TEAM_DOWN ? createTeamDown() : createTeamUp(); 
