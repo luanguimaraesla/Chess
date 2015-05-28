@@ -14,6 +14,7 @@ import model.Pawn;
 
 public class GameControl {
 	
+	private Team turnTeam;
 	private Team brownTeam;
 	private Team whiteTeam;
 	private SquareControl squareControl;
@@ -22,7 +23,7 @@ public class GameControl {
 		this.squareControl = squareControl;
 		TeamSetup teamSetup = new TeamSetup();
 		this.brownTeam = teamSetup.createTeam(Team.TEAM_UP);
-		this.whiteTeam = teamSetup.createTeam(Team.TEAM_DOWN);
+		this.turnTeam = this.whiteTeam = teamSetup.createTeam(Team.TEAM_DOWN);
 	}
 
 	public boolean isMovementValid(Point point, Piece piece){
@@ -216,5 +217,19 @@ public class GameControl {
 	public void setWhiteTeam(Team whiteTeam) {
 		this.whiteTeam = whiteTeam;
 	}
-		
+
+	public Team getTurnTeam() {
+		return turnTeam;
+	}
+
+	public void changeTurnTeam() {
+		if(this.turnTeam == this.whiteTeam)
+			this.turnTeam = this.brownTeam;
+		else
+			this.turnTeam = this.whiteTeam;
+	}
+	
+	public boolean isTurnOfTheTeam(Team team){
+		return team == getTurnTeam();
+	}
 }
