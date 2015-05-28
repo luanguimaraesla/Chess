@@ -5,16 +5,16 @@ import java.util.ArrayList;
 
 public class Pawn extends Piece {
 	
-	private boolean mooved;
+	private boolean moved;
 	
 	public Pawn (String imagePath){
 		super(imagePath);
-		this.mooved = false;
+		this.moved = false;
 	}
 	
 	public Pawn (String imagePath, Point position){
 		super(imagePath, position);
-		this.mooved = false;
+		this.moved = false;
 	}
 	
 	@Override
@@ -25,7 +25,7 @@ public class Pawn extends Piece {
 			possiblePointsToGo.add(new Point((int)this.getPosition().getX() - 1, (int)this.getPosition().getY() + i));
 		}
 		
-		if (!alreadyMooved()){
+		if (!alreadyMoved()){
 			possiblePointsToGo.add(new Point ((int) this.getPosition().getX() + 2, (int) this.getPosition().getY()));
 			possiblePointsToGo.add(new Point ((int) this.getPosition().getX() - 2, (int) this.getPosition().getY()));
 		}
@@ -36,10 +36,10 @@ public class Pawn extends Piece {
 	@Override
 	public void move(Point newPosition){
 		setPosition(newPosition);
-		this.mooved = true;
+		this.moved = true;
 	}
 	
-	public boolean alreadyMooved(){
-		return mooved;
+	public boolean alreadyMoved(){
+		return moved;
 	}
 }

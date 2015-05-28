@@ -54,8 +54,10 @@ public class Team extends ArrayList<Piece>{
 	}
 	
 	public boolean kill(Piece piece){
-		if(piece instanceof King)
+		if(piece instanceof King){
 			killKing();
+			return true;
+		}
 		
 		return this.remove(piece);
 	}

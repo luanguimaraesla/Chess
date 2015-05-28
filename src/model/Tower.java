@@ -5,16 +5,16 @@ import java.util.ArrayList;
 
 public class Tower extends Piece {
 	
-	private boolean mooved;
+	private boolean moved;
 	
 	public Tower (String imagePath){
 		super(imagePath);
-		this.mooved = false;
+		this.moved = false;
 	}
 	
 	public Tower (String imagePath, Point position){
 		super(imagePath, position);
-		this.mooved = false;
+		this.moved = false;
 	}
 	
 	@Override
@@ -34,6 +34,6 @@ public class Tower extends Piece {
 	}
 	
 	public boolean alreadyMooved(){
-		return mooved;
+		return moved;
 	}
 }

@@ -5,16 +5,16 @@ import java.util.ArrayList;
 
 public class King extends Piece {
 	
-	private boolean mooved;
+	private boolean moved;
 	
 	public King (String imagePath){
 		super(imagePath);
-		this.mooved = false;
+		this.moved = false;
 	}
 	
 	public King (String imagePath, Point position){
 		super(imagePath, position);
-		this.mooved = false;
+		this.moved = false;
 	}
 	
 	@Override
@@ -25,11 +25,11 @@ public class King extends Piece {
 			for (int j = -1; j <= 1; j++)
 				if(i != 0 || j != 0)
 					possiblePointsToGo.add(new Point(x + i, y + j));
-			
+		
 		return possiblePointsToGo;
 	}
 	
-	public boolean alreadyMooved(){
-		return mooved;
+	public boolean alreadyMoved(){
+		return moved;
 	}
 }
