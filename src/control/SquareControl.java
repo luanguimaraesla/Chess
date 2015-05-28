@@ -157,8 +157,13 @@ public class SquareControl implements SquareEventListener {
 		square.getPiece().move(square.getPosition());
 		this.selectedSquare.removePiece();
 		unselectSquare(square);
-		colorSquareIfCheckmat(selectedPiece);
-		this.gameControl.changeTurnTeam();
+		
+		if(gameControl.getRivalTeam(selectedPiece).stillKingAlive()){
+			colorSquareIfCheckmat(selectedPiece);
+			this.gameControl.changeTurnTeam();
+		}else{
+			this.gameControl.setGameOver(true);
+		}
 	}
 	
 	public void colorSquareIfCheckmat(Piece selectedPiece){
@@ -181,12 +186,11 @@ public class SquareControl implements SquareEventListener {
 	}
 
 	private void selectSquare(Square square){
-		if(this.selectedSquare != EMPTY_SQUARE && this.selectedSquare.havePiece())
-			resetColorPiecePossibleMovements(selectedSquare.getPiece());
-		
-		if (square.havePiece() && gameControl.isTurnOfTheTeam(gameControl.getPieceTeam(square.getPiece()))) {
-			if(!(gameControl.checkIsOnCheckmat(gameControl.getPieceTeam(square.getPiece())) && 
-			   !(square.getPiece() instanceof King))){
+		if(!gameControl.isGameOver()){
+			if(this.selectedSquare != EMPTY_SQUARE && this.selectedSquare.havePiece())
+				resetColorPiecePossibleMovements(selectedSquare.getPiece());
+			
+			if (square.havePiece() && gameControl.isTurnOfTheTeam(gameControl.getPieceTeam(square.getPiece()))) {
 				this.selectedSquare = square;
 				this.selectedSquare.setColor(this.colorSelected);
 				colorPiecePossibleMovements(square.getPiece());
@@ -195,6 +199,7 @@ public class SquareControl implements SquareEventListener {
 	}
 	
 	public void colorPiecePossibleMovements(Piece piece){
+		resetColorPiecePossibleMovements(piece);
 		for(Point eachPoint : this.gameControl.getValidPieceMovements(piece)){
 			getSquare(eachPoint).setColor(this.colorPossibleMovements);
 			this.possiblePieceDestinationSquareList.add(getSquare(eachPoint));

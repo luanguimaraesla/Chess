@@ -18,12 +18,22 @@ public class GameControl {
 	private Team brownTeam;
 	private Team whiteTeam;
 	private SquareControl squareControl;
+	private boolean gameOver;
 	
 	public GameControl(SquareControl squareControl){
 		this.squareControl = squareControl;
 		TeamSetup teamSetup = new TeamSetup();
 		this.brownTeam = teamSetup.createTeam(Team.TEAM_UP);
 		this.turnTeam = this.whiteTeam = teamSetup.createTeam(Team.TEAM_DOWN);
+		this.gameOver = false;
+	}
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
 	}
 
 	public boolean isMovementValid(Point point, Piece piece){
